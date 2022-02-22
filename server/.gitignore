@@ -1,4 +1,8 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> 8591bff (edit: .gitignore 수정)
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
@@ -25,6 +29,10 @@ yarn-error.log*
 
 # hist
 .history
+<<<<<<< HEAD
 =======
 /node_modules
 >>>>>>> 78ce5c9 ([seo] add gitignore at server)
+=======
+>>>>>>> d58d9ca (edit: .gitignore 수정)
+>>>>>>> 8591bff (edit: .gitignore 수정)
