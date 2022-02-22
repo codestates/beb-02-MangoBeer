@@ -1,4 +1,4 @@
-// Nav 바
+// Nav 바 -> 1차 완성
 import { Navbar, Nav, NavDropdown, Container } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
