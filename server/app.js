@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // express 기본 모듈 불러오기
 const express = require('express')
 const app = express()
@@ -23,3 +24,14 @@ app.post("/write", writepage)
 app.listen(4000, () => {
   console.log(`server running... http://localhost:${4000}`)
 })
+=======
+import express from "express";
+
+const app = express();
+const port = 3000;
+
+// 포트로 서버 오픈
+app.listen(port, () => {
+    console.log(`port : ${port} 구동중!`);
+});
+>>>>>>> 10dc929 (server express로 수정)
