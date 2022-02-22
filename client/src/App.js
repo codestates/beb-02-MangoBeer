@@ -7,6 +7,7 @@ import TransferToken from './pages/transferToken';
 import TransferNft from './pages/transferNft';
 import MyPage from './pages/myPage';
 import Login from './pages/login';
+import WriteContents from './pages/writeContents';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           <Route exact path="/token" element={<TransferToken />} />
           <Route exact path="/nft" element={<TransferNft />} />
           <Route exact path='/mypage' element={<MyPage />} />
+          <Route exact path='/writeContents' element={<WriteContents />} />
         </Routes>
     </div>
     </BrowserRouter>
