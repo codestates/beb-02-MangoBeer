@@ -19,6 +19,7 @@
   "scripts": {
     "start": "nodemon app.js",
 <<<<<<< HEAD
+<<<<<<< HEAD
     "test": "nodemon test.js"
 =======
 <<<<<<< HEAD
@@ -27,6 +28,9 @@
     "test": "nodemon test.js"
 >>>>>>> 52b00f7 (edit: .gitignore, package.json 수정)
 >>>>>>> dfc0230 (edit: .gitignore, package.json 수정)
+=======
+    "test": "nodemon test.js"
+>>>>>>> 170833c (chore: merge 이후로 설정부분 꼬인거 원상복구)
   },
   "eslintConfig": {
     "extends": [
@@ -46,4 +50,8 @@
       "last 1 safari version"
     ]
   }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 170833c (chore: merge 이후로 설정부분 꼬인거 원상복구)
