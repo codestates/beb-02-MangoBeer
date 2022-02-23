@@ -8,6 +8,8 @@ import TransferNft from './pages/transferNft';
 import MyPage from './pages/myPage';
 import Login from './pages/login';
 import WriteContents from './pages/writeContents';
+import CreateNFT from './pages/createNft';
+import ViewContents from './pages/viewContents';
 
 function App() {
   return (
@@ -21,6 +23,8 @@ function App() {
           <Route exact path="/nft" element={<TransferNft />} />
           <Route exact path='/mypage' element={<MyPage />} />
           <Route exact path='/writeContents' element={<WriteContents />} />
+          <Route exact path='/mintNft' element={<CreateNFT />} />
+          <Route exact path='/viewContents' element={<ViewContents />} />
         </Routes>
     </div>
     </BrowserRouter>
