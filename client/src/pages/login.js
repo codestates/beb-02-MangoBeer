@@ -7,10 +7,21 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 function Login() {
     const [id, setId] = useState("");
     const [pw, setPw] = useState("");
+    const [isUser,setIsUser] =useState("false")
 
     const logInBtnHandler = () => {
       
-      let isUser = false;
+      try {
+        axios.post("http://localhost:3838/", {
+          username: id,
+          password: pw,
+        })
+        .then((res) => {
+          
+        })
+      } catch(err) {
+        console.log(err);
+      }
       // user인지 확인하는 API 호출
       isUser = true; // API 결과에 따라 isUser flag 값 변경
 
