@@ -50,6 +50,9 @@ function Forum() {
             </thead>
             <tbody>
             {
+              boardDataList.length == 0?
+              ''
+              :
               boardDataList.map((dataInfo) => {
                 return <BoardList key={dataInfo.id} dataInfo={dataInfo} />
               })
