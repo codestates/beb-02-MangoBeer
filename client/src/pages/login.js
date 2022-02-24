@@ -25,7 +25,8 @@ function Login() {
             // 회원 가입 진행 API
             setIsUser("");
             try{
-              axios.post("http://localhost:3838/signup", {
+              //axios.post("http://127.0.0.1:3307/signup", {
+              axios.post("http://localhost:3307/signup", {
                 username: id,
                 password: pw,
               })
@@ -46,7 +47,8 @@ function Login() {
       try {
         console.log('진입진입! now')
 
-        axios.post("http://localhost:3838/", {
+        //axios.post("http://127.0.0.1:3307/", {
+        axios.post("http://localhost:3307/", {
           username: id,
           password: pw,
         })
@@ -58,39 +60,6 @@ function Login() {
       } catch(err) {
         console.log(err);
       }
-      // user인지 확인하는 API 호출
-      //isUser = true; // API 결과에 따라 isUser flag 값 변경
-      // useEffect(() => {  },[isUser]);
-
-        // console.log("_isUser: "+isUser);
-        // if(isUser === "pw_true") { // user라면
-        //   alert("로그인에 성공하였습니다.")
-        //   document.location.href = '/forum'
-        // } else if(isUser === "pw_false") {
-        //   setIsUser("");
-        //   alert("비밀번호가 일치하지 않습니다.")
-        // } else if(isUser==="user_false") {
-        //   if(window.confirm("회원 정보가 없습니다. 회원가입 하시겠습니까?")){
-        //     console.log('회원가입 진행 중...')
-        //     // 회원 가입 진행 API
-        //     setIsUser("");
-        //     try{
-        //       axios.post("http://localhost:3838/signup", {
-        //         username: id,
-        //         password: pw,
-        //       })
-        //       .then((res) => {
-        //         console.log('res: '+res)
-        //         setAddress(res.data);
-        //         console.log("회원가입 완료! address : "+ address)
-        //       })
-        //     } catch(err) {
-        //       console.log(err);
-        //     }
-        //   }
-        // }
-
-      // },[isUser]);
     }
 
     return (
