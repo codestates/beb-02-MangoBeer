@@ -24,9 +24,9 @@ function Forum() {
 
     return (
       <div className="Forum">
+        <div>
         <h2 style={{marginTop: "50px", marginLeft: "17%", textAlign: "left"}}>Forum</h2>
         
-        <div>
           <span style={{marginTop: "10px", marginLeft: "17%", float: "left"}}>자유롭게 게시물을 작성하고 조회해 보세요!</span>
           <Button 
             style={{marginRight: "17%", float: "right"}}
