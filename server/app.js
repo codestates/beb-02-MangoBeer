@@ -1,9 +1,11 @@
-import express from "express";
+var express = require('express');
+var {sequelize} = require('./models');
 
-const app = express();
-const port = 3000;
+var app = express();
 
-// 포트로 서버 오픈
-app.listen(port, () => {
-    console.log(`port : ${port} 구동중!`);
-});
+sequelize.sync();
+
+app.listen(4000, () => {
+    console.log(`🚀  server running... http://localhost:${4000}`)
+  })
+
