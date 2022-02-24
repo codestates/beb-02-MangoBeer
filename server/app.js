@@ -1,6 +1,4 @@
 var express = require('express');
-var indexRouter = require('./routes/index');
-var userRouter = require('./routes/users');
 var {sequelize} = require('./models');
 
 var app = express();

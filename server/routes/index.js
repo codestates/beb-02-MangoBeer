@@ -7,7 +7,7 @@ router.get('/', function(req, res, next) {
 
 router.use('/forum', require('./forum'));
 router.use('/write', require('./write'));
-router.use('/users', require('./users'));
-router.use('/test', require('./test'));
+router.use('/users', require('./user'));
+// router.use('/test', require('./test'));
 
 module.exports = router;
