@@ -43,18 +43,21 @@ app.post('/', async(req,res) => {
   const username = req.body.username;
   const password = req.body.password;
 
+  // `SELECT password FROM users WHERE userName = "${username}"`,
+
   con.query(
     `SELECT password FROM users WHERE userName = "${username}"`,
     (err, result) => {
       if(err) throw err
-      console.log("result : "+JSON.stringify(result))
-      
+      //console.log("result : "+JSON.parse(result[0]))
+      console.log("result : "+result);
       
 
-      if(result !== 0) {   // username 일치하는게 있다면 패스워드 확인.
-        result = JSON.stringify(result[0].password);
-        console.log("password : "+ result)
-        if(result === password) {
+      if(result.length !== 0) {   // username 일치하는게 있다면 패스워드 확인.
+        //result = JSON.parse(result[0].password);
+        result = result[0].password;
+        console.log("password : "+ result+ " , pw : "+ password)
+        if(result == password) {
           console.log("패스워드가 일치.");
           res.send("pw_true")
         } else {

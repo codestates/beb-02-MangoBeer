@@ -11,5 +11,7 @@ CREATE TABLE users (
   privateKey VARCHAR(255)
 );
 
+/*
 INSERT INTO users(userName, password, address, privateKey) 
-VALUES("woo",1234,"12345","123456");
+VALUES("woo","1234","12345","123456");
+*/

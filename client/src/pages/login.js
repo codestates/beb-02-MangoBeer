@@ -1,6 +1,6 @@
 // 로그인 페이지
 
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 import { InputGroup, FormControl, Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -11,31 +11,12 @@ function Login() {
     const [isUser,setIsUser] = useState("");
     const [address,setAddress] = useState("");
 
-    const logInBtnHandler = () => {
-      console.log(id+", "+pw)
-      try {
-        console.log('진입진입! now')
-
-        axios.post("http://localhost:3838/", {
-          username: id,
-          password: pw,
-        })
-        .then((res) => {
-          console.log("받은 데이터 : "+res.data);
-          setIsUser(res.data);
-          //console.log("isUser: "+isUser);
-        })
-      } catch(err) {
-        console.log(err);
-      }
-      // user인지 확인하는 API 호출
-      //isUser = true; // API 결과에 따라 isUser flag 값 변경
-      setTimeout(() => {
-        console.log("isUser: "+isUser);
-        if(isUser == "pw_true") { // user라면
+    useEffect(() => { 
+      console.log("_isUser: "+isUser);
+        if(isUser === "pw_true") { // user라면
           alert("로그인에 성공하였습니다.")
           document.location.href = '/forum'
-        } else if(isUser == "pw_false") {
+        } else if(isUser === "pw_false") {
           setIsUser("");
           alert("비밀번호가 일치하지 않습니다.")
         } else if(isUser==="user_false") {
@@ -49,7 +30,7 @@ function Login() {
                 password: pw,
               })
               .then((res) => {
-                console.log('res: '+res)
+                console.log('res: '+res.data)
                 setAddress(res.data);
                 console.log("회원가입 완료! address : "+ address)
               })
@@ -58,7 +39,58 @@ function Login() {
             }
           }
         }
-      },1000);
+    },[isUser]);
+
+    const LogInBtnHandler = () => {
+      console.log(id+", "+pw)
+      try {
+        console.log('진입진입! now')
+
+        axios.post("http://localhost:3838/", {
+          username: id,
+          password: pw,
+        })
+        .then((res) => {
+          console.log("받은 데이터 : "+res.data);
+          setIsUser(res.data);
+          console.log("isUser: "+isUser);
+        })
+      } catch(err) {
+        console.log(err);
+      }
+      // user인지 확인하는 API 호출
+      //isUser = true; // API 결과에 따라 isUser flag 값 변경
+      // useEffect(() => {  },[isUser]);
+
+        // console.log("_isUser: "+isUser);
+        // if(isUser === "pw_true") { // user라면
+        //   alert("로그인에 성공하였습니다.")
+        //   document.location.href = '/forum'
+        // } else if(isUser === "pw_false") {
+        //   setIsUser("");
+        //   alert("비밀번호가 일치하지 않습니다.")
+        // } else if(isUser==="user_false") {
+        //   if(window.confirm("회원 정보가 없습니다. 회원가입 하시겠습니까?")){
+        //     console.log('회원가입 진행 중...')
+        //     // 회원 가입 진행 API
+        //     setIsUser("");
+        //     try{
+        //       axios.post("http://localhost:3838/signup", {
+        //         username: id,
+        //         password: pw,
+        //       })
+        //       .then((res) => {
+        //         console.log('res: '+res)
+        //         setAddress(res.data);
+        //         console.log("회원가입 완료! address : "+ address)
+        //       })
+        //     } catch(err) {
+        //       console.log(err);
+        //     }
+        //   }
+        // }
+
+      // },[isUser]);
     }
 
     return (
@@ -95,7 +127,7 @@ function Login() {
         <Button 
           variant="light" 
           style={{margin: "30px"}}
-          onClick={logInBtnHandler}
+          onClick={LogInBtnHandler}
         >
         Log-in
         </Button>
