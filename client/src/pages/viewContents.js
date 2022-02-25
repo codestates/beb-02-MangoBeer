@@ -11,7 +11,7 @@ function ViewContents() {
     
     const [newComment, setNewComment] = useState('');
 
-    useEffect(() => {
+    useEffect(async () => {
 
       getPost();
       getComment();
@@ -20,11 +20,11 @@ function ViewContents() {
 
     const getPost = () => {
 
-      axios.get('https://koreanjson.com/posts/' + contentsId) // 게시글 하나만 불러오기
+      axios.get('http://localhost:4000/forum/' + contentsId) // 게시글 하나만 불러오기
       .then(res => res.data)
       .then(data => {
-        // console.log('게시글!!!!', data);
-        setContentsInfo(data);
+        // console.log('게시글!!!!', data[0]);
+        setContentsInfo(data[0]);
       })
       .catch(err => console.log(err));
 
@@ -70,7 +70,7 @@ function ViewContents() {
         
         <div className='Content' style={{marginLeft: "17%", marginRight: "17%", marginTop: "50px"}}>
         
-            <span style={{margin: "10px", float: "right"}}>작성자 {contentsInfo.UserId} | 작성 일시  {contentsInfo.createdAt}</span>
+            <span style={{margin: "10px", float: "right"}}>작성자 {contentsInfo.userName} | 작성 일시  {contentsInfo.create_at}</span>
 
             <Table bordered>
                 <thead 
