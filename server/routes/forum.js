@@ -14,4 +14,15 @@ router.get('/', (req, res, next) => {
 // let sql = `select * from board where id = (?)`;
 // router.get('/{id}')  
 
+router.get('/:id', (req, res, next) => {
+    Board.findAll({
+        where: {
+            id: req.params.id
+        }
+    })
+    .then((post) => {
+        res.status(200).json(post);
+    })
+})
+
 module.exports = router;
