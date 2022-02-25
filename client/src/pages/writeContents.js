@@ -2,7 +2,7 @@
 import React, {useState} from 'react';
 import { InputGroup, FormControl, Button } from 'react-bootstrap';
 
-function WriteContents(username,address) {
+function WriteContents({username,address}) {
   const [title, setTitle] = useState("");
   const [contents, setContents] = useState("");
 

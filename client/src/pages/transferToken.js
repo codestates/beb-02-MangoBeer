@@ -2,7 +2,7 @@
 import {FormControl, InputGroup, Button, Table} from 'react-bootstrap';
 import {useState, useEffect} from 'react';
 import TxList from '../components/txList';
-function TransferToken(username,address) {
+function TransferToken({username,address}) {
 
   const [receiver, setReceiver] = useState('');
   const [amount, setAmount] = useState('');

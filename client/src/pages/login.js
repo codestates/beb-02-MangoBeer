@@ -5,11 +5,12 @@ import axios from 'axios';
 import { InputGroup, FormControl, Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-function Login(username,setUsername,address,setAddress) {
+function Login({username,setUsername,address,setAddress}) {
     const [pw, setPw] = useState("");
     const [isUser,setIsUser] = useState("");
 
     useEffect(() => { 
+        console.log("확인: "+isUser+" : "+username+" : " + address);
         if(isUser === "pw_true") { // user라면
           alert("로그인에 성공하였습니다.")
           document.location.href = '/forum'
@@ -28,7 +29,6 @@ function Login(username,setUsername,address,setAddress) {
               })
               .then((res) => {
                 setAddress(res.data);
-                console.log("회원가입 완료! address : "+ address)
                 alert("회원가입 완료습니다.\n로그인 다시 진행해주세요.")
               })
             } catch(err) {
@@ -45,7 +45,10 @@ function Login(username,setUsername,address,setAddress) {
           password: pw,
         })
         .then((res) => {
-          setIsUser(res.data);
+          if(res.data.address){
+            setAddress(res.data.address);
+          }
+          setIsUser(res.data.isuser);
         })
       } catch(err) {
         console.log(err);

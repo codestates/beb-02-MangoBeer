@@ -5,7 +5,7 @@ import {useState} from 'react'
 import NftList from '../components/nftList';
 import TxList from '../components/txList';
 
-function MyPage(username,address) {
+function MyPage({username,address}) {
 
     const [myBoardDataList, setMyBoardDataList] = useState([]);
     const [myTxList, setMyTxList] = useState([{from: '0x111111111111', to: '0x222222222222222', amount: '3', txhash: '0x33333333333'}]);

@@ -10,9 +10,7 @@ router.post('/', (req, res, next) => {
   console.log(username + " : "+password)
 
   User.findAll({
-    attributes: {
-      password
-    },
+    attributes: ['password','address'],
     where: {
       userName: username
     }
@@ -21,18 +19,22 @@ router.post('/', (req, res, next) => {
       console.log("user : "+result)
       if(result.length !== 0) {   // username 일치하는게 있다면 패스워드 확인.
         //result = JSON.parse(result[0].password);
+        if(result[0].address !== undefined){
+        var address = result[0].address;
+        }
         result = result[0].password;
-        console.log("password : "+ result+ " , pw : "+ password)
+        
+        //console.log("password : "+ result+ " , pw : "+ password)
         if(result == password) {
           console.log("패스워드가 일치.");
-          res.send("pw_true")
+          res.send({isuser: "pw_true", address: address})
         } else {
           console.log("패스워드가 일치하지 않음.");
-          res.send("pw_false"); //  -> 비밀번호가 달라 재시도 필요 관련 내용 확인필요.
+          res.send({isuser: "pw_false"}); //  -> 비밀번호가 달라 재시도 필요 관련 내용 확인필요.
         }
       } else {   // username 일치하는게 없다면 회원가입진행
         console.log("username이 일치하지 않음.");
-        res.send("user_false");
+        res.send({isuser: "user_false"});
       }  //else 닫음
 
       //res.json(users);
