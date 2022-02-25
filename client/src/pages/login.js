@@ -25,8 +25,7 @@ function Login() {
             // 회원 가입 진행 API
             setIsUser("");
             try{
-              //axios.post("http://127.0.0.1:3307/signup", {
-              axios.post("http://localhost:3307/signup", {
+              axios.post("http://localhost:3306/signup", {
                 username: id,
                 password: pw,
               })
@@ -47,8 +46,8 @@ function Login() {
       try {
         console.log('진입진입! now')
 
-        //axios.post("http://127.0.0.1:3307/", {
-        axios.post("http://localhost:3307/", {
+        // axios.post("http://127.0.0.1:3306/", {
+        axios.post("http://localhost:3306/", {
           username: id,
           password: pw,
         })
