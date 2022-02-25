@@ -4,7 +4,7 @@ import BoardList from '../components/boardList';
 import {useEffect, useState } from 'react';
 import axios from 'axios'
 
-function Forum() {
+function Forum(username,address) {
     const [boardDataList, setBoardDataList] = useState([]);
 
     useEffect(() => {

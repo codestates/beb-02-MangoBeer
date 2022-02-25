@@ -5,14 +5,11 @@ import axios from 'axios';
 import { InputGroup, FormControl, Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-function Login() {
-    const [id, setId] = useState("");
+function Login(username,setUsername,address,setAddress) {
     const [pw, setPw] = useState("");
     const [isUser,setIsUser] = useState("");
-    const [address,setAddress] = useState("");
 
     useEffect(() => { 
-      console.log("_isUser: "+isUser);
         if(isUser === "pw_true") { // user라면
           alert("로그인에 성공하였습니다.")
           document.location.href = '/forum'
@@ -25,36 +22,30 @@ function Login() {
             // 회원 가입 진행 API
             setIsUser("");
             try{
-              axios.post("http://localhost:3306/signup", {
-                username: id,
+              axios.post("http://localhost:4000/signup", {
+                username: username,
                 password: pw,
               })
               .then((res) => {
-                console.log('res: '+res.data)
                 setAddress(res.data);
                 console.log("회원가입 완료! address : "+ address)
+                alert("회원가입 완료습니다.\n로그인 다시 진행해주세요.")
               })
             } catch(err) {
               console.log(err);
             }
-          }
-        }
+          } else { setIsUser(''); }
+        } else { setIsUser(''); }
     },[isUser]);
 
     const LogInBtnHandler = () => {
-      console.log(id+", "+pw)
       try {
-        console.log('진입진입! now')
-
-        // axios.post("http://127.0.0.1:3306/", {
-        axios.post("http://localhost:3306/", {
-          username: id,
+        axios.post("http://localhost:4000/", {
+          username: username,
           password: pw,
         })
         .then((res) => {
-          console.log("받은 데이터 : "+res.data);
           setIsUser(res.data);
-          console.log("isUser: "+isUser);
         })
       } catch(err) {
         console.log(err);
@@ -70,9 +61,9 @@ function Login() {
             <InputGroup.Text id="userName">Username</InputGroup.Text>
             <FormControl
               placeholder="Username"
-              value={id}
+              value={username}
               onChange={(e)=> {
-                setId(e.target.value); 
+                setUsername(e.target.value); 
                 // console.log(id);
               }}
             />
