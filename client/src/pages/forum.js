@@ -4,8 +4,8 @@ import BoardList from '../components/boardList';
 import {useEffect, useState } from 'react';
 import axios from 'axios' // API 호출에 사용
 
-function Forum() {
-    const [boardDataList, setBoardDataList] = useState([]); // 게시글 전체 list
+function Forum({username,address}) {
+    const [boardDataList, setBoardDataList] = useState([]);
 
     useEffect(() => {
       axios.get('http://localhost:4000/forum') // get /forum API 호출

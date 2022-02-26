@@ -1,5 +1,6 @@
 import './App.css';
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { useState } from "react";
 
 import Navigation from './components/nav';
 import Forum from './pages/forum';
@@ -12,19 +13,22 @@ import CreateNFT from './pages/createNft';
 import ViewContents from './pages/viewContents';
 
 function App() {
+  const [username, setUsername] = useState("");
+  const [address, setAddress] = useState("");
+
   return (
     <BrowserRouter>
     <div className="App">
       <Navigation />
         <Routes>
-          <Route exact path="/" element={<Login />} />
-          <Route exact path="/forum" element={<Forum />} />
-          <Route exact path="/token" element={<TransferToken />} />
-          <Route exact path="/nft" element={<TransferNft />} />
-          <Route exact path='/mypage' element={<MyPage />} />
-          <Route exact path='/writeContents' element={<WriteContents />} />
-          <Route exact path='/mintNft' element={<CreateNFT />} />
-          <Route exact path='/viewContents' element={<ViewContents />} />
+          <Route exact path="/" element={<Login username={username} setUsername={setUsername} address={address} setAddress={setAddress} />} />
+          <Route exact path="/forum" element={<Forum username={username} address={address} />} />
+          <Route exact path="/token" element={<TransferToken username={username} address={address}/>} />
+          <Route exact path="/nft" element={<TransferNft username={username} address={address}/>} />
+          <Route exact path='/mypage' element={<MyPage username={username} address={address}/>} />
+          <Route exact path='/writeContents' element={<WriteContents username={username} address={address}/>} />
+          <Route exact path='/mintNft' element={<CreateNFT username={username} address={address} />} />
+          <Route exact path='/viewContents' element={<ViewContents username={username} address={address} />} />
         </Routes>
     </div>
     </BrowserRouter>

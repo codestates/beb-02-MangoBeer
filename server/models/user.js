@@ -14,7 +14,7 @@ module.exports = (Sequelize, DataTypes) => {
         allowNull: false,
       },
       address: {
-        type: DataTypes.STRING(40),
+        type: DataTypes.STRING(255),
         allowNull: false,
       },
       privateKey: {

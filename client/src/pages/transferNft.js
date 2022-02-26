@@ -3,7 +3,7 @@ import { Button } from 'react-bootstrap';
 import NftList from '../components/nftList';
 import {useState, useEffect} from 'react';
 
-function TransferNft() {
+function TransferNft({username,address}) {
     const [nftList, setNftList] = useState([]); // nft List
 
     useEffect(() => {

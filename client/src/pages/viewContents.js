@@ -4,7 +4,7 @@ import {Table, InputGroup, FormControl, Button} from 'react-bootstrap';
 import axios from 'axios';
 import Comment from '../components/comment';
 
-function ViewContents() {
+function ViewContents({username,address}) {
     const contentsId = document.location.search.slice(1);
     const [contentsInfo, setContentsInfo] = useState({});
     const [commentInfo, setCommentInfo] = useState([]);

@@ -1,28 +1,57 @@
 // 로그인 페이지
 
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
+import axios from 'axios';
 import { InputGroup, FormControl, Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-function Login() {
-    const [id, setId] = useState("");
+function Login({username,setUsername,address,setAddress}) {
     const [pw, setPw] = useState("");
+    const [isUser,setIsUser] = useState("");
 
-    const logInBtnHandler = () => {
-      
-      let isUser = false;
-      // user인지 확인하는 API 호출
-      isUser = true; // API 결과에 따라 isUser flag 값 변경
+    useEffect(() => { 
+        console.log("확인: "+isUser+" : "+username+" : " + address);
+        if(isUser === "pw_true") { // user라면
+          alert("로그인에 성공하였습니다.")
+          document.location.href = '/forum'
+        } else if(isUser === "pw_false") {
+          setIsUser("");
+          alert("비밀번호가 일치하지 않습니다.")
+        } else if(isUser==="user_false") {
+          if(window.confirm("회원 정보가 없습니다. 회원가입 하시겠습니까?")){
+            console.log('회원가입 진행 중...')
+            // 회원 가입 진행 API
+            setIsUser("");
+            try{
+              axios.post("http://localhost:4000/signup", {
+                username: username,
+                password: pw,
+              })
+              .then((res) => {
+                setAddress(res.data);
+                alert("회원가입 완료습니다.\n로그인 다시 진행해주세요.")
+              })
+            } catch(err) {
+              console.log(err);
+            }
+          } else { setIsUser(''); }
+        } else { setIsUser(''); }
+    },[isUser]);
 
-      if(isUser) { // user라면
-        alert("로그인에 성공하였습니다.")
-        document.location.href = '/forum'
-      }
-      else {
-        if(window.confirm("회원 정보가 없습니다. 회원가입 하시겠습니까?")){
-          console.log('회원가입 진행 중...')
-          // 회원 가입 진행 API
-        }
+    const LogInBtnHandler = () => {
+      try {
+        axios.post("http://localhost:4000/", {
+          username: username,
+          password: pw,
+        })
+        .then((res) => {
+          if(res.data.address){
+            setAddress(res.data.address);
+          }
+          setIsUser(res.data.isuser);
+        })
+      } catch(err) {
+        console.log(err);
       }
     }
 
@@ -35,9 +64,9 @@ function Login() {
             <InputGroup.Text id="userName">Username</InputGroup.Text>
             <FormControl
               placeholder="Username"
-              value={id}
+              value={username}
               onChange={(e)=> {
-                setId(e.target.value); 
+                setUsername(e.target.value); 
                 // console.log(id);
               }}
             />
@@ -60,7 +89,7 @@ function Login() {
         <Button 
           variant="light" 
           style={{margin: "30px"}}
-          onClick={logInBtnHandler}
+          onClick={LogInBtnHandler}
         >
         Log-in
         </Button>

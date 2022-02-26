@@ -17,7 +17,7 @@ function Navigation() {
                 <NavDropdown title="MY" id="basic-nav-dropdown">
                 <NavDropdown.Item href="mypage">MyPage</NavDropdown.Item>
                 <NavDropdown.Divider />
-                <NavDropdown.Item href="/">Logout</NavDropdown.Item>
+                <NavDropdown.Item href="/" >Logout</NavDropdown.Item>
                 </NavDropdown>
             </Nav>
             </Navbar.Collapse>
