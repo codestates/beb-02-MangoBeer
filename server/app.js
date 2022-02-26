@@ -1,17 +1,21 @@
-var express = require('express');
-var {sequelize} = require('./models');
-var bodyParser = require('body-parser')
-var cors = require('cors')
+const express = require('express');
+const {sequelize} = require('./models');
+const bodyParser = require("body-parser");  
+const cors = require('cors');                
+ 
+const app = express();
+                  
+app.use(bodyParser.urlencoded({ extended: true }));   // 추가
+app.use(bodyParser.json());  // 추가
+app.use(cors());  // 추가
 
-var app = express();
+sequelize.sync(); // Sequelize가 초기화 될 때 DB에 필요한 테이블을 생성하는 함수
 
-sequelize.sync();
+app.use('/', require("./routes/index"));
 
 app.use(bodyParser.urlencoded({extended:true}))
 app.use(bodyParser.json());
 app.use(cors());
-
-app.use('/', require('./routes/index'));
 
 app.listen(4000, () => {
     console.log(`🚀  server running... http://localhost:${4000}`)
