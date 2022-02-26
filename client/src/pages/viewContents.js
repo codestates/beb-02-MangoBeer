@@ -4,7 +4,8 @@ import {Table, InputGroup, FormControl, Button} from 'react-bootstrap';
 import axios from 'axios';
 import Comment from '../components/comment';
 
-function ViewContents({username,address}) {
+function ViewContents({username, address}) {
+
     const contentsId = document.location.search.slice(1);
     const [contentsInfo, setContentsInfo] = useState({});
     const [commentInfo, setCommentInfo] = useState([]);
@@ -52,7 +53,7 @@ function ViewContents({username,address}) {
         // 댓글 작성 API 호출 ...
         // 이후 댓글 작성되면 방금 전에 작성한 댓글이 잘 보이는지 확인
         axios.post('http://localhost:4000/comments', {
-          userName: 'temp_user',
+          userName: username,
           comments: newComment,
           post_id: contentsId
         })

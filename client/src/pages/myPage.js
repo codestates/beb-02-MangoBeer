@@ -19,11 +19,11 @@ function MyPage({username,address}) {
         <div style={{marginLeft: "18%", marginRight: "18%", marginTop: "30px"}}>
           <table style={{textAlign: "left"}}>
             <tr>
-              <th style={{width: "280px", fontSize: "23px"}}>Seo Mingyun</th>
-              <th rowSpan={2} style={{width: "300px", fontSize: "27px"}}>23487 <span style={{color: "orange"}}>Mango🥭</span></th>
+              <th style={{width: "500px", fontSize: "23px"}}>{username}</th>
+              <th rowSpan={2} style={{width: "400px", fontSize: "27px"}}>23487 <span style={{color: "orange"}}>Mango🥭</span></th>
             </tr>
             <tr>
-              <td style={{fontSize: "18px", color: "gray"}}>0x8ydvy23iu4yt5u3i23i</td>
+              <td style={{fontSize: "18px", color: "gray"}}>{address}</td>
             </tr>
           </table>
         </div>

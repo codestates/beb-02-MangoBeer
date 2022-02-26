@@ -1,17 +1,21 @@
 // 글 쓰기 페이지
 import React, {useState} from 'react';
+import { useNavigate } from "react-router";
 import { InputGroup, FormControl, Button } from 'react-bootstrap';
 
 function WriteContents({username,address}) {
   const [title, setTitle] = useState("");
   const [contents, setContents] = useState("");
 
+  const navigate = useNavigate();
+
   const writeBtnHandler = () => {
     if(window.confirm("게시글을 작성하시겠습니까?")){
       console.log('게시글 저장 중...')
       // 게시글 저장 API
       // 게시글 저장 시 -> 페이지 이동
-      document.location.href = '/forum';
+      // document.location.href = '/forum';
+      navigate('/forum');
     }
   }
 
