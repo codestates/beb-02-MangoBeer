@@ -9,6 +9,8 @@ function Forum({username,address}) {
     const [boardDataList, setBoardDataList] = useState([]);
     const navigate = useNavigate();
 
+    console.log(username);
+
     useEffect(() => {
       axios.get('http://localhost:4000/forum') // get /forum API 호출
       .then(res => res.data) // 호출 성공 하면, response의 json 부분 추출(여기서는 /forum 호출의 결과이니 전체 게시물임)
