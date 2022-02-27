@@ -2,9 +2,13 @@
 import { Button } from 'react-bootstrap';
 import NftList from '../components/nftList';
 import {useState, useEffect} from 'react';
+import {useNavigate} from 'react-router';
 
 function TransferNft({username,address}) {
+
     const [nftList, setNftList] = useState([]); // nft List
+    
+    const navigate = useNavigate();
 
     useEffect(() => {
       // NFT list 불러오는 API 호출 ...
@@ -12,7 +16,7 @@ function TransferNft({username,address}) {
     }, [])
 
     const mintBntHandler = () => {
-      document.location.href = '/mintNft';
+      navigate('/mintNft')
     }
 
     return (

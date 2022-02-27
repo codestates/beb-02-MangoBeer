@@ -3,6 +3,7 @@ import React, {useState} from 'react';
 import { InputGroup, FormControl, Button } from 'react-bootstrap';
 
 function CreateNFT({username,address}) {
+  
     const [selectedFileURI, setSelectedFileURI] = useState(); // 선택된 파일 URI(미리보기용)
     const [selectedFileImg, setSelectedFileImg] = useState();
 

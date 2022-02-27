@@ -1,11 +1,14 @@
 // 글 쓰기 페이지
 import React, {useState} from 'react';
+import { useNavigate } from "react-router";
 import { InputGroup, FormControl, Button } from 'react-bootstrap';
 import axios from 'axios';
 
 function WriteContents() {
   const [title, setTitle] = useState("");
   const [contents, setContents] = useState("");
+
+  const navigate = useNavigate();
 
   const writeBtnHandler = () => {
     if(window.confirm("게시글을 작성하시겠습니까?")){
@@ -26,6 +29,8 @@ function WriteContents() {
       })
 
       document.location.href = '/forum';
+      // document.location.href = '/forum';
+      navigate('/forum');
     }
   }
 

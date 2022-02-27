@@ -1,6 +1,7 @@
 // 로그인 페이지
 
 import React, {useEffect, useState} from 'react';
+import { useNavigate} from "react-router";
 import axios from 'axios';
 import { InputGroup, FormControl, Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -8,12 +9,14 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 function Login({username,setUsername,address,setAddress}) {
     const [pw, setPw] = useState("");
     const [isUser,setIsUser] = useState("");
+    const navigate = useNavigate();
 
     useEffect(() => { 
         console.log("확인: "+isUser+" : "+username+" : " + address);
         if(isUser === "pw_true") { // user라면
           alert("로그인에 성공하였습니다.")
-          document.location.href = '/forum'
+          // document.location.href = '/forum'
+          navigate('/forum');
         } else if(isUser === "pw_false") {
           setIsUser("");
           alert("비밀번호가 일치하지 않습니다.")
@@ -29,7 +32,7 @@ function Login({username,setUsername,address,setAddress}) {
               })
               .then((res) => {
                 setAddress(res.data);
-                alert("회원가입 완료습니다.\n로그인 다시 진행해주세요.")
+                alert("회원가입 완료되었습니다.\n로그인 다시 진행해주세요.")
               })
             } catch(err) {
               console.log(err);
@@ -47,6 +50,7 @@ function Login({username,setUsername,address,setAddress}) {
         .then((res) => {
           if(res.data.address){
             setAddress(res.data.address);
+            console.log(res.data.address);
           }
           setIsUser(res.data.isuser);
         })
@@ -67,6 +71,7 @@ function Login({username,setUsername,address,setAddress}) {
               value={username}
               onChange={(e)=> {
                 setUsername(e.target.value); 
+                console.log(e.target.value);
                 // console.log(id);
               }}
             />

@@ -19,7 +19,7 @@ function App() {
   return (
     <BrowserRouter>
     <div className="App">
-      <Navigation />
+      <Navigation username={username} address={address} />
         <Routes>
           <Route exact path="/" element={<Login username={username} setUsername={setUsername} address={address} setAddress={setAddress} />} />
           <Route exact path="/forum" element={<Forum username={username} address={address} />} />
