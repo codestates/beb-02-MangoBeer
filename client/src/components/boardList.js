@@ -1,10 +1,12 @@
 // 글 리스트 컴포넌트. froum 페이지에서 글 리스트 보여주는 한 줄에 해당
+import { useNavigate} from "react-router";
 
-function BoardList({dataInfo}) {
+function BoardList({dataInfo, username, address}) {
+  const navigate = useNavigate();
 
   const boardTrHandler = () => { // 글 리스트 중 하나 클릭하면 해당 글의 id를 통해 해당 글 상세 페이지로 이동
     var conId = String(dataInfo.id);
-    document.location.href = '/viewContents?' + conId;
+    navigate('/viewContents?' + conId);
   }
 
   return (

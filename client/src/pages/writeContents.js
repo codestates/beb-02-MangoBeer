@@ -1,19 +1,38 @@
 // 글 쓰기 페이지
 import React, {useState} from 'react';
+import { useNavigate } from "react-router";
 import { InputGroup, FormControl, Button } from 'react-bootstrap';
+import axios from 'axios';
 
-function WriteContents({username,address}) {
+function WriteContents() {
   const [title, setTitle] = useState("");
   const [contents, setContents] = useState("");
+
+  const navigate = useNavigate();
 
   const writeBtnHandler = () => {
     if(window.confirm("게시글을 작성하시겠습니까?")){
       console.log('게시글 저장 중...')
       // 게시글 저장 API
       // 게시글 저장 시 -> 페이지 이동
+
+      axios.post('http://localhost:4000/write', {
+        userName: 'admin',
+        title: title,
+        content: contents
+      })
+      .then(res => res.data)
+      .then(data => {
+        setTitle('');
+        setContents('');
+      })
+
       document.location.href = '/forum';
     }
   }
+
+  
+
 
   return (
     <div className="WriteContents">

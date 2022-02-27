@@ -2,10 +2,12 @@
 import { Button, Table } from 'react-bootstrap';
 import BoardList from '../components/boardList';
 import {useEffect, useState } from 'react';
+import { useNavigate} from "react-router";
 import axios from 'axios' // API 호출에 사용
 
 function Forum({username,address}) {
     const [boardDataList, setBoardDataList] = useState([]);
+    const navigate = useNavigate();
 
     useEffect(() => {
       axios.get('http://localhost:4000/forum') // get /forum API 호출
@@ -18,7 +20,7 @@ function Forum({username,address}) {
 
 
     const createBntHandler = () => {
-      document.location.href = '/writeContents'; // 글 작성 페이지로 이동
+      navigate('/writeContents');
     }
 
     return (
@@ -53,7 +55,7 @@ function Forum({username,address}) {
               '' // 없다면 게시글이 하나도 없다는 뜻이니 화면에 아무것도 출력하지 않음
               :
               boardDataList.map((dataInfo) => { // 안에 내용이 있다면, 게시글 요소 하나하나에 map을 통해 접근
-                return <BoardList key={dataInfo.id} dataInfo={dataInfo} /> // 게시글 하나의 정보 요소(dataInfo)를 BoardList component에 props로 넘기기
+                return <BoardList key={dataInfo.id} dataInfo={dataInfo} username={username} address={address} /> // 게시글 하나의 정보 요소(dataInfo)를 BoardList component에 props로 넘기기
               })
             }
           </tbody>

@@ -7,8 +7,8 @@ router.post('/', (req, res, next) => {
     console.log(Board);
 
     Board.create({
-        title: req.body.post_title,
-        content: req.body.post_content,
+        title: req.body.title,
+        content: req.body.content,
         userName: req.body.userName
     })
 });
