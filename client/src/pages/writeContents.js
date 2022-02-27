@@ -28,6 +28,8 @@ function WriteContents() {
       })
 
       document.location.href = '/forum';
+      // document.location.href = '/forum';
+      navigate('/forum');
     }
   }
 
