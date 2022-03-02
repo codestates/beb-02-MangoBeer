@@ -2,8 +2,9 @@
 import React, {useState} from 'react';
 import { useNavigate } from "react-router";
 import { InputGroup, FormControl, Button } from 'react-bootstrap';
+import axios from 'axios';
 
-function WriteContents({username,address}) {
+function WriteContents() {
   const [title, setTitle] = useState("");
   const [contents, setContents] = useState("");
 
@@ -14,10 +15,27 @@ function WriteContents({username,address}) {
       console.log('게시글 저장 중...')
       // 게시글 저장 API
       // 게시글 저장 시 -> 페이지 이동
+
+
+      axios.post('http://localhost:4000/write', {
+        userName: 'admin',
+        title: title,
+        content: contents
+      })
+      .then(res => res.data)
+      .then(data => {
+        setTitle('');
+        setContents('');
+      })
+
+      document.location.href = '/forum';
       // document.location.href = '/forum';
       navigate('/forum');
     }
   }
+
+  
+
 
   return (
     <div className="WriteContents">
