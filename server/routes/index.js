@@ -14,5 +14,12 @@ router.use('/write', require('./write'));
 router.use('/comments', require('./comments'));
 // router.use('/users', require('./user'));
 
+// ERC20 API
+router.use('/deployContract', require('./erc20/deployContract'));
+router.use('/ethFaucet', require('./erc20/ethFaucet'));
+router.use('/forEther', require('./erc20/forEther')); // 여러 기타 api들 모아놓음
+router.use('/mintToken', require('./erc20/mintToken')); // erc20 토큰 발행
+router.use('/transferEach', require('./erc20/transferEach')); // erc20 토큰 유저들끼리 교환
+
 
 module.exports = router;

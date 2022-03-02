@@ -65,6 +65,8 @@ router.post('/signup', (req, res, next) => {
       
       let address = (ks.getAddresses()).toString();
       let keyStore = ks.serialize();
+      let privateKey = ks.exportPrivateKey(address, pwDerivedKey);
+
       console.log('userName: '+username+
         '\n password: '+password+ '\n address : '+ address+'\n privateKey: '+mnemonic);
 
@@ -72,7 +74,7 @@ router.post('/signup', (req, res, next) => {
         userName: username,
         password: password,
         address: address,
-        privateKey: mnemonic
+        privateKey: privateKey
       })
       .then((result) => {
         console.log("회원정보 저장완료");

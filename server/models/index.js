@@ -17,5 +17,5 @@ db.User = require('./user') (sequelize, Sequelize);
 // db.Board = require('./board') (sequelize, Sequelize);
 db.Comment = require('./comment')(sequelize, Sequelize);
 db.Transaction = require('./transaction')(sequelize, Sequelize);
-
+db.Contract = require('./contract')(sequelize, Sequelize);
 module.exports = db;  // 모듈화
