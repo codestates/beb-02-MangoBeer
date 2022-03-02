@@ -4,7 +4,7 @@ import { useNavigate } from "react-router";
 import { InputGroup, FormControl, Button } from 'react-bootstrap';
 import axios from 'axios';
 
-function WriteContents() {
+function WriteContents({username,address}) {
   const [title, setTitle] = useState("");
   const [contents, setContents] = useState("");
 
@@ -16,9 +16,8 @@ function WriteContents() {
       // 게시글 저장 API
       // 게시글 저장 시 -> 페이지 이동
 
-
       axios.post('http://localhost:4000/write', {
-        userName: 'admin',
+        userName: username,
         title: title,
         content: contents
       })
@@ -27,9 +26,6 @@ function WriteContents() {
         setTitle('');
         setContents('');
       })
-
-      document.location.href = '/forum';
-      // document.location.href = '/forum';
       navigate('/forum');
     }
   }
