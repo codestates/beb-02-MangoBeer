@@ -7,11 +7,12 @@ const { User } = require('../models');
 router.post('/', (req, res, next) => {
   const username = req.body.username;
   const password = req.body.password;
+  console.log(`[${username}] : [${password}]`)
 
-  if(username === undefined || password === undefined) {
+  if(username === '' || password === '') {
     console.log("username 혹은 password가 입력되지 않음.")
     res.send({isuser: "input_false"});
-  }
+  }else{
 
   User.findAll({
     attributes: ['password','address'],
@@ -43,6 +44,7 @@ router.post('/', (req, res, next) => {
       console.error(err);
       next(err);
     })
+  }
 });
 
 // 유저 등록
