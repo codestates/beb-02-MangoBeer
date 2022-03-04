@@ -24,10 +24,12 @@ function ViewContents({username, address}) {
       axios.get('http://localhost:4000/forum/' + contentsId) // 게시글 하나만 불러오기
       .then(res => res.data)
       .then(data => {
-        // console.log('게시글!!!!', data[0]);
         setContentsInfo(data[0]);
       })
-      .catch(err => console.log(err));
+      .catch(err => {
+        console.log(err);
+        alert(err.toString());
+      });
 
     }
 
@@ -40,10 +42,12 @@ function ViewContents({username, address}) {
        }) // 게시글 id에 맞는 댓글 불러오기
       .then(res => res.data)
       .then(data => {
-        // console.log('댓글!!!!', data);
         setCommentInfo(data.reverse());
       })
-      .catch(err => console.log(err));
+      .catch(err => {
+        console.log(err);
+        alert(err.toString());
+      });
 
     }
 
@@ -58,12 +62,40 @@ function ViewContents({username, address}) {
           post_id: contentsId
         })
         .then(res => res.data)
-        .then(data => {
+        .then(async (data) => {
           // console.log('새 댓글!!!!', data);
           setNewComment('');
+          const flag = await serveToken();
+          if (flag){
+            alert('토큰이 지급되었습니다.');
+          }
+          else{
+            alert('토큰 지급이 실패하였습니다.');
+          }
           getComment();
         })
+        .catch(err => {
+          console.log(err);
+          alert(err.toString());
+        });
       }
+    }
+
+    const serveToken = async () => {
+      try{
+        const res = await axios.post('http://localhost:4000/mintToken', {
+          amount: '1000000000000000000',
+          to: address
+        });
+    
+        console.log('res>>', res);
+        return true;
+      }
+      catch(error) {
+        console.log('err>>', error);
+        return false;
+      }
+  
     }
 
     return (

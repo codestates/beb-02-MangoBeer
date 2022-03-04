@@ -12,6 +12,7 @@ router.use('/signup', require('./user'));
 router.use('/forum', require('./forum'));
 router.use('/write', require('./write'));
 router.use('/comments', require('./comments'));
+router.use('/mypage', require('./mypage'));
 // router.use('/users', require('./user'));
 
 // ERC20 API

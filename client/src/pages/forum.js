@@ -1,4 +1,5 @@
 // 글 조회 페이지
+/* global BigInt */
 import { Button, Table } from 'react-bootstrap';
 import BoardList from '../components/boardList';
 import {useEffect, useState } from 'react';
@@ -19,13 +20,17 @@ function Forum({username,address}) {
       .then(data => {
         setBoardDataList(data.reverse()); // API로 받아온 게시물 전체 list를 boardDataList 변수에다가 저장
       })
-      .catch(err => console.log(err)); // 에러 난다면 에러 캐치
+      .catch(err => {
+        console.log(err);
+        alert(err.toString());
+      }); // 에러 난다면 에러 캐치
     },[count])
 
 
     const createBntHandler = () => {
       navigate('/writeContents');
     }
+
 
     return (
       <div className="Forum">
