@@ -14,8 +14,7 @@ db.sequelize = sequelize;  // db객체에 Sequelize 인스턴스 넣기
 
 db.Board = require('./board') (sequelize, Sequelize);
 db.User = require('./user') (sequelize, Sequelize);
-// db.Board = require('./board') (sequelize, Sequelize);
 db.Comment = require('./comment')(sequelize, Sequelize);
 db.Transaction = require('./transaction')(sequelize, Sequelize);
-db.Contract = require('./contract')(sequelize, Sequelize);
+
 module.exports = db;  // 모듈화

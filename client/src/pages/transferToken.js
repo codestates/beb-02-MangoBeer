@@ -1,47 +1,116 @@
 // 토큰 거래 페이지 
+/* global BigInt */
+
 import {FormControl, InputGroup, Button, Table} from 'react-bootstrap';
 import {useState, useEffect} from 'react';
 import axios from 'axios';
 import TxList from '../components/txList';
-
 function TransferToken({username,address}) {
 
   const [receiver, setReceiver] = useState('');
   const [amount, setAmount] = useState('');
   const [txList, setTxList] = useState([]); // Tx 리스트
+  const [myTokenBal, setMyTokenBal] = useState(); // 내 토큰 개수
 
+  const [count, setCount] = useState(0);
 
   useEffect(() => {
+    setTimeout(() => { setCount(count + 1) }, 10000); // 10s
+
+    getTokenBal(); // token 잔액 불러오기
+    getTxList();
+  }, [count])
+  
+  const transferBntHandler = () => {
+    if(window.confirm("토큰을 전송하시겠습니까?")){
+      console.log('토큰 전송 중 ...')
+
+      var am = BigInt(amount);
+      am *= 1000000000000000000n
+      am = String(am);
+
+      console.log(address, amount, receiver);
+
+      axios.post('http://localhost:4000/transferEach', {
+        to: receiver,
+        from: address,
+        amount: am
+      })
+      .then(res => {
+        if(res.status == 201) {
+          alert('토큰 전송에 성공하였습니다.');
+          setAmount('');
+          setReceiver('');
+          getTokenBal();
+        }
+        else {
+          alert('토큰 전송에 실패하였습니다.');
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        alert('토큰 전송에 실패하였습니다.');
+        alert(err.toString());
+      })
+    }
+  }
+
+  const getTokenBal = () => {
+    axios.get('http://localhost:4000/forEther/totalSupply', {
+      params: {
+        account: address
+      }
+    })
+    .then(res => {
+      // console.log(res);
+      if(res.status === 200){
+        var balance = BigInt(res.data.totalSupply);
+        balance /= 1000000000000000000n
+        balance = String(balance);
+        setMyTokenBal(balance); 
+      }
+      else {
+        setMyTokenBal('-');
+      }
+    }) 
+    .catch(err => {
+      console.log(err); 
+      alert(err.toString());
+      setMyTokenBal('-');
+    });
+  }
+
+  const getTxList = () => {
     // Tx list 불러오는 API 호출(내 주소가 from or to인 트랜잭션만 가져옴) ...
     axios.get('http://localhost:4000/txList', { 
       params: {
         address: address
       }
-     }) // 게시글 id에 맞는 댓글 불러오기
+     }) // 내가 수신하거나 발신한 트랜잭션 불러오기
     .then(res => res.data)
     .then(data => {
-      // console.log('댓글!!!!', data);
       setTxList(data);
     })
     .catch(err => console.log(err));
-
-    // setTxList([{from: '0x111111111111', to: '0x222222222222222', amount: '3', txhash: '0x33333333333'}])
-  }, [])
-  
-  const transferBntHandler = () => {
-    if(window.confirm("토큰을 전송하시겠습니까?")){
-      console.log('토큰 전송 중 ...')
-      // ERC20 토큰 전송 API...
-      setAmount('');
-      setReceiver('');
-    }
+    // setTxList([{from: '0x111111111111', to: '0x222222222222222', amount: '3', txhash: '0x33333333333'}]);
   }
 
     return (
       <div className="TransferToken">
-        <div>
-          <h2 style={{marginTop: "50px", marginLeft: "17%", textAlign: "left"}}>Token</h2>
-          <span style={{marginTop: "10px", marginLeft: "17%", float: "left"}}>보유한 토큰을 다른 유저들과 거래해보세요!</span>
+
+        <h2 style={{marginTop: "50px", marginLeft: "17%", textAlign: "left"}}>Token</h2>
+        <div style={{marginTop: "10px", marginLeft: "17%", float: "left"}}>보유한 토큰을 다른 유저들과 거래해보세요!</div>
+
+        <div style={{marginLeft: "17%", marginRight: "17%", marginTop: "70px", backgroundColor: "#FFF8DC"}}>
+          <table style={{textAlign: "left", margin: "20px"}}>
+            <tr>
+              <th style={{width: "500px", fontSize: "23px"}}>{username}</th>
+              <th rowSpan={2} style={{width: "400px", fontSize: "27px"}}>{myTokenBal} <span style={{color: "orange"}}>Mango 🥭</span></th>
+            </tr>
+            <tr>
+              <td style={{fontSize: "18px", color: "gray"}}>{address}</td>
+            </tr>
+          </table>
         </div>
 
         <div style={{marginTop: "80px", marginLeft: "17%", marginRight: "17%"}}>
