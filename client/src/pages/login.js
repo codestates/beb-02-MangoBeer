@@ -13,6 +13,10 @@ function Login({username,setUsername,address,setAddress}) {
 
     useEffect(() => { 
         console.log("확인: "+isUser+" : "+username+" : " + address);
+        if(isUser === "input_false") { // 입력이 안됬다면
+          setIsUser("");
+          alert("입력이 잘못되었습니다.\n다시 입력해주세요.")
+        }
         if(isUser === "pw_true") { // user라면
           alert("로그인에 성공하였습니다.")
           // document.location.href = '/forum'

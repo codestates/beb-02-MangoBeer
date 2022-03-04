@@ -12,7 +12,7 @@ router.use('/signup', require('./user'));
 router.use('/forum', require('./forum'));
 router.use('/write', require('./write'));
 router.use('/comments', require('./comments'));
-// router.use('/users', require('./user'));
+router.use('/txList', require('./token'));
 
 // ERC20 API
 router.use('/deployContract', require('./erc20/deployContract'));

@@ -1,7 +1,9 @@
 // 토큰 거래 페이지 
 import {FormControl, InputGroup, Button, Table} from 'react-bootstrap';
 import {useState, useEffect} from 'react';
+import axios from 'axios';
 import TxList from '../components/txList';
+
 function TransferToken({username,address}) {
 
   const [receiver, setReceiver] = useState('');
@@ -10,8 +12,20 @@ function TransferToken({username,address}) {
 
 
   useEffect(() => {
-    // Tx list 불러오는 API 호출 ...
-    setTxList([{from: '0x111111111111', to: '0x222222222222222', amount: '3', txhash: '0x33333333333'}])
+    // Tx list 불러오는 API 호출(내 주소가 from or to인 트랜잭션만 가져옴) ...
+    axios.get('http://localhost:4000/txList', { 
+      params: {
+        address: address
+      }
+     }) // 게시글 id에 맞는 댓글 불러오기
+    .then(res => res.data)
+    .then(data => {
+      // console.log('댓글!!!!', data);
+      setTxList(data);
+    })
+    .catch(err => console.log(err));
+
+    // setTxList([{from: '0x111111111111', to: '0x222222222222222', amount: '3', txhash: '0x33333333333'}])
   }, [])
   
   const transferBntHandler = () => {
