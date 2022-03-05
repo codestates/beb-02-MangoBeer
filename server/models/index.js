@@ -17,5 +17,6 @@ db.User = require('./user') (sequelize, Sequelize);
 db.Comment = require('./comment')(sequelize, Sequelize);
 db.Contract = require('./contracts')(sequelize, Sequelize);
 db.Transaction = require('./transaction')(sequelize, Sequelize);
+db.Transaction = require('./nft')(sequelize, Sequelize);
 
 module.exports = db;  // 모듈화
