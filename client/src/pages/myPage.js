@@ -1,15 +1,72 @@
 // 마이페이지
+/* global BigInt */
+
 import { Table } from 'react-bootstrap';
 import BoardList from '../components/boardList';
-import {useState} from 'react'
+import {useState, useEffect} from 'react'
 import NftList from '../components/nftList';
 import TxList from '../components/txList';
+import axios from 'axios';
 
 function MyPage({username,address}) {
 
-    const [myBoardDataList, setMyBoardDataList] = useState([]);
+    const [myPostDataList, setMyPostDataList] = useState([]);
     const [myTxList, setMyTxList] = useState([{from: '0x111111111111', to: '0x222222222222222', amount: '3', txhash: '0x33333333333'}]);
     const [myNftList, setMyNftList] = useState([{nftSrc: "images/nft1.jpeg", nftName: "nft Name", nftPrice: "nft Price", nftId: 1}]);
+    const [myTokenBal, setMyTokenBal] = useState();
+
+    const [count, setCount] = useState(0);
+
+    useEffect(()=>{
+      setTimeout(() => { setCount(count + 1) }, 10000); // 10s
+
+      getTokenBal();
+      getPosts();
+    }, [count])
+
+    const getTokenBal = () => {
+      axios.get('http://localhost:4000/forEther/totalSupply', {
+        params: {
+          account: address
+        }
+      })
+      .then(res => {
+        // console.log(res);
+        if(res.status === 200){
+          var balance = BigInt(res.data.totalSupply);
+          balance /= 1000000000000000000n
+          balance = String(balance);
+          setMyTokenBal(balance); 
+        }
+        else {
+          setMyTokenBal('-');
+        }
+      }) 
+      .catch(err => {
+        console.log(err); 
+        alert(err.toString());
+        setMyTokenBal('-');
+      });
+    }
+
+    const getPosts = () => {
+      axios.get('http://localhost:4000/mypage/getPosts', {
+        params: {
+          user_name: username
+        }
+      })
+      .then(res => {
+        // console.log(res);
+        return res.data;
+      })
+      .then(data => {
+        setMyPostDataList(data);
+      }) 
+      .catch(err => {
+        console.log(err); 
+        alert(err.toString());
+      });
+    }
 
     return (
       <div className="MyPage">
@@ -20,7 +77,7 @@ function MyPage({username,address}) {
           <table style={{textAlign: "left"}}>
             <tr>
               <th style={{width: "500px", fontSize: "23px"}}>{username}</th>
-              <th rowSpan={2} style={{width: "400px", fontSize: "27px"}}>23487 <span style={{color: "orange"}}>Mango🥭</span></th>
+              <th rowSpan={2} style={{width: "400px", fontSize: "27px"}}>{myTokenBal} <span style={{color: "orange"}}>Mango 🥭</span></th>
             </tr>
             <tr>
               <td style={{fontSize: "18px", color: "gray"}}>{address}</td>
@@ -41,10 +98,10 @@ function MyPage({username,address}) {
             </thead>
             <tbody>
             {
-              myBoardDataList.length == 0?
+              myPostDataList.length == 0?
               ''
               :
-              myBoardDataList.map((dataInfo) => {
+              myPostDataList.map((dataInfo) => {
                 return <BoardList key={dataInfo.id} dataInfo={dataInfo} />
               })
             }

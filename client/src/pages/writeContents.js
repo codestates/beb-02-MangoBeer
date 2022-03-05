@@ -22,14 +22,43 @@ function WriteContents({username,address}) {
         content: contents
       })
       .then(res => res.data)
-      .then(data => {
+      .then(async (data) => {
         setTitle('');
         setContents('');
+        const flag = await serveToken();
+        if (flag){
+          alert('토큰이 지급되었습니다.');
+        }
+        else{
+          alert('토큰 지급이 실패하였습니다.');
+        }
+        navigate('/forum');
       })
-      navigate('/forum');
+      .catch(err => {
+        console.log(err);
+        alert('토큰 지급이 실패하였습니다.');
+        alert(err.toString());
+      });;
+
     }
   }
 
+  const serveToken = async () => {
+    try{
+      const res = await axios.post('http://localhost:4000/mintToken', {
+        amount: '1000000000000000000',
+        to: address
+      });
+  
+      console.log('res>>', res);
+      return true;
+    }
+    catch(error) {
+      console.log('err>>', error);
+      return false;
+    }
+
+  }
   
 
 

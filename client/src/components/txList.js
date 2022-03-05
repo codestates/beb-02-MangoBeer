@@ -8,8 +8,8 @@ function TxList({dataInfo}) {
           <tr>
             <td>{dataInfo.from}</td>
             <td>{dataInfo.to}</td>
-            <td>{dataInfo.amount}</td>
-            <td>{dataInfo.txhash}</td>
+            <td>{dataInfo.value}</td>
+            <td>{dataInfo.hash}</td>
           </tr>
   
     );
