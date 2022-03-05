@@ -13,18 +13,17 @@ function Login({username,setUsername,address,setAddress}) {
 
     useEffect(() => { 
         console.log("확인: "+isUser+" : "+username+" : " + address);
-        if(isUser === "input_false") { // 입력이 안됬다면
+        if(isUser === "input_false") { // 입력이 안된부분이 있다면
           setIsUser("");
           alert("입력이 안된 부분이 있습니다.")
-        }
-        if(isUser === "pw_true") { // user라면
+        } else if(isUser === "pw_true") { // username password 일치
           alert("로그인에 성공하였습니다.")
           // document.location.href = '/forum'
           navigate('/forum');
-        } else if(isUser === "pw_false") {
+        } else if(isUser === "pw_false") { // username 일치, password 불일치
           setIsUser("");
           alert("비밀번호가 일치하지 않습니다.")
-        } else if(isUser==="user_false") {
+        } else if(isUser==="user_false") { // username 불일치
           if(window.confirm("회원 정보가 없습니다. 회원가입 하시겠습니까?")){
             console.log('회원가입 진행 중...')
             // 회원 가입 진행 API
