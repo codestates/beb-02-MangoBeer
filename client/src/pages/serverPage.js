@@ -10,8 +10,9 @@ function ServerPage({username,address}) {
 
     const [myTokenBal, setMyTokenBal] = useState();
     const [myEthBal, setMyEthBal] = useState();
-    const [myContractAddr, setMyContractAddr] = useState('0xeAc1E62039e89Fbe4E2cB5BA118083C2126dA41b'); // 컨트랙트 주소
-    const [myContractDate, setMyContractDate] = useState('2022-03-04T23:20')
+    const [myContractAddr, setMyContractAddr] = useState('-'); // 컨트랙트 주소
+    const [myContractDate, setMyContractDate] = useState('-')
+    const [isDeploy, setIsDeploy] = useState(false);
 
     const [count, setCount] = useState(0);
 
@@ -20,7 +21,27 @@ function ServerPage({username,address}) {
 
       getTokenBal();
       getEthBal();
+      getContractInfo();
     }, [count])
+
+    const getContractInfo = () => {
+      axios.get('http://localhost:4000/mypage/getLatestContracts')
+      .then(res => {
+        // console.log(res);
+        if(res.status === 200){
+          setMyContractAddr(res.data.latestInfo.contractAddr);
+          setMyContractDate(res.data.latestInfo.create_at);
+          setIsDeploy(true);
+        }
+      }) 
+      .catch(err => {
+        console.log(err); 
+        alert('컨트랙트 배포가 필요합니다.');
+        setMyContractAddr('-');
+        setMyContractDate('-');
+        setIsDeploy(false);
+      });
+    }
 
     const getTokenBal = () => {
       axios.get('http://localhost:4000/forEther/totalSupply')
@@ -61,7 +82,7 @@ function ServerPage({username,address}) {
         });
     }
 
-    const  FaucetBntHandler = () => {
+    const FaucetBntHandler = () => {
         axios.post('http://localhost:4000/ethFaucet')
         .then(res => {
           // console.log(res);
@@ -77,6 +98,30 @@ function ServerPage({username,address}) {
           alert(err.toString());
           setMyEthBal('-');
         });
+    }
+
+    const deployBntHandler = () => {
+      if(isDeploy == false) {
+        axios.post('http://localhost:4000/deployContract')
+        .then(res => {
+          // console.log(res);
+          if(res.status === 201){
+            getContractInfo();
+          }
+          else {
+            alert('ERC20 토큰 컨트랙트 배포에 실패하였습니다.');
+          }
+        }) 
+        .catch(err => {
+          console.log(err); 
+          alert('ERC20 토큰 컨트랙트 배포에 실패하였습니다.');
+          alert(err.toString());
+        });
+      }
+      else {
+        alert('이미 컨트랙트를 배포하였습니다.');
+      }
+
     }
 
     return (
@@ -120,7 +165,7 @@ function ServerPage({username,address}) {
         <div style={{marginLeft: "18%", marginRight: "18%", marginTop: "40px"}}>
           <table style={{textAlign: "left"}}>
             <tr>
-              <th style={{ fontWeight: "normal", fontSize: "22px"}}>Contract Info</th>
+              <th style={{ fontWeight: "normal", fontSize: "22px"}}>ERC20 Token Contract Info</th>
             </tr>
             <tr> 
               <td style={{fontSize: "27px", fontWeight: "bold"}}>{myContractAddr}</td>
@@ -128,7 +173,7 @@ function ServerPage({username,address}) {
                 <Button 
                     variant="light" 
                     style={{margin: "4px"}}
-                    onClick={console.log('click~')}
+                    onClick={deployBntHandler}
                     >
                     컨트랙트 배포하기
                 </Button>

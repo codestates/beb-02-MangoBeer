@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Web3 = require('web3');
+const { Contract } = require('../../models');
 
 const web3 = new Web3('HTTP://127.0.0.1:7545');
 
@@ -25,10 +26,11 @@ router.post("/", async (req, res)=>{
     .send(parameter, (err, transactionHash) => {
         console.log('Transaction Hash :', transactionHash);
     })
-    .on('receipt', (receipt) => {
-        // console.log(receipt);
+    .on('receipt', async (receipt) => {
+        // console.log(receipt.contractAddress);
         const msg = 'Succeed in deploying ERC20 token contract.'
-        res.status(201).json({receipt, msg});
+        const newContract = await Contract.create({ contractAddr: receipt.contractAddress})
+        res.status(201).json({receipt, newContract, msg});
     })
     .on('error', (error)=> {
         const msg = 'Failed to deploy ERC20 token contract.'
