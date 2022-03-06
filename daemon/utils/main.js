@@ -1,23 +1,23 @@
 const fs = require('fs');
 const path = require('path');
 const Web3 = require('web3');
-const basePath = '/Users/seomingyun/VSworkspace/BEB_space/project/project_2/beb-02-MangoBeer/daemon';
-
-
+require('dotenv').config();
+const basePath = path.dirname(__filename);
+const blockNumPath = path.join(basePath, '/blockNumber');
 
 // 가장 마지막에 확인한 블록번호 조회
 const checkedBlockNum = Number(
-  fs.readFileSync(path.join(basePath, '/utils/blockNumber'), {
+  fs.readFileSync(blockNumPath, {
     encoding: 'utf-8',
   })
 );
 
-const contractAddress = '0x6113E1C88459A870b01795B15B63ef3CfAFe0c78';
+const contractAddress = process.env.CONTRACT_ADDR;
 // fs.readFileSync('./deployedAddress',{
 //   encoding: 'utf-8', 
 // });
 
-const web3 = new Web3(new Web3.providers.HttpProvider('HTTP://127.0.0.1:7545'));
+const web3 = new Web3(new Web3.providers.HttpProvider(process.env.GANACHE_NETWORK));
 const allTransactions = [];
 let lastest = checkedBlockNum;
 
@@ -54,7 +54,7 @@ const getLastestTransactions = async () => {
 					for (let tx of data) {
 						if (tx.from === contractAddress || tx.to === contractAddress) {
 							result.push(tx);
-              console.log('result' + result);
+              // console.log('result' + result);
 						}
 					}
 					return result;
@@ -62,7 +62,7 @@ const getLastestTransactions = async () => {
 				.then((data) => {
 					// 가장 마지막에 확인한 블록번호 저장
 					fs.writeFileSync(
-						path.join(basePath, '/utils/blockNumber'),
+						blockNumPath,
 						String(lastest),
 					);
 					return data;

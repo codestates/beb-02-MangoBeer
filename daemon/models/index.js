@@ -3,7 +3,7 @@
 const Sequelize = require('sequelize');
 
 const env = process.env.NODE_ENV || 'development';         // 개발용 환경 설정
-const config = require('../config/config.json')[env];      // Sequelize 설정 파일
+const config = require('../config/config.js')[env];      // Sequelize 설정 파일
 const db = {};
 
 // Sequelize 인스턴스화
