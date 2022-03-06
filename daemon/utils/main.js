@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const Web3 = require('web3');
-const basePath = '/Users/moon/work/05_section/beb-02-MangoBeer/daemon';
+const basePath = '/Users/seomingyun/VSworkspace/BEB_space/project/project_2/beb-02-MangoBeer/daemon';
 
 // 가장 마지막에 확인한 블록번호 조회
 const checkedBlockNum = Number(
@@ -10,12 +10,12 @@ const checkedBlockNum = Number(
   })
 );
 
-const contractAddress = process.env.CONTRACT_ADDR;
+const contractAddress = '0xCffE48a1C643C0C3E6C9633A3914FB77b6AEd47D';
 // fs.readFileSync('./deployedAddress',{
 //   encoding: 'utf-8', 
 // });
 
-const web3 = new Web3(new Web3.providers.HttpProvider(process.env.GANACHE_NETWORK));
+const web3 = new Web3(new Web3.providers.HttpProvider('HTTP://127.0.0.1:7545'));
 const allTransactions = [];
 let lastest = checkedBlockNum;
 

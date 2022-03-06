@@ -5,7 +5,6 @@ import {FormControl, InputGroup, Button, Table} from 'react-bootstrap';
 import {useState, useEffect} from 'react';
 import axios from 'axios';
 import TxList from '../components/txList';
-import axios from 'axios';
 function TransferToken({username,address}) {
 
   const [receiver, setReceiver] = useState('');
@@ -43,6 +42,7 @@ function TransferToken({username,address}) {
           setAmount('');
           setReceiver('');
           getTokenBal();
+          getTxList();
         }
         else {
           alert('토큰 전송에 실패하였습니다.');
@@ -83,17 +83,12 @@ function TransferToken({username,address}) {
 
   const getTxList = () => {
     // Tx list 불러오는 API 호출(내 주소가 from or to인 트랜잭션만 가져옴) ...
-    axios.get('http://localhost:4000/txList', { 
-      params: {
-        address: address
-      }
-     }) // 내가 수신하거나 발신한 트랜잭션 불러오기
+    axios.get('http://localhost:4000/txList/withAddr') // 내가 수신하거나 발신한 트랜잭션 불러오기
     .then(res => res.data)
     .then(data => {
-      setTxList(data);
+      setTxList(data.reverse());
     })
     .catch(err => console.log(err));
-    // setTxList([{from: '0x111111111111', to: '0x222222222222222', amount: '3', txhash: '0x33333333333'}]);
   }
 
     return (
