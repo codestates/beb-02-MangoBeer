@@ -5,7 +5,7 @@ import axios from 'axios';
 
 function CreateNFT({username,address}) {
   
-    const [selectedFileURI, setSelectedFileURI] = useState(); // 선택된 파일 URI(미리보기용)
+    const [selectedFileURL, setSelectedFileURL] = useState(); // 선택된 파일 URL(미리보기용)
     const [selectedFileImg, setSelectedFileImg] = useState();
 
     const [nftName, setNftName] = useState(''); // 입력한 nft 이름
@@ -13,11 +13,12 @@ function CreateNFT({username,address}) {
 
     const selectImgForNFT = (event) => {
       const file = event.target.files[0];
+      
       setSelectedFileImg(file);
       var reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onloadend = () => {
-          setSelectedFileURI(reader.result);
+          setSelectedFileURL(reader.result);
       }
   }
 
@@ -27,7 +28,7 @@ function CreateNFT({username,address}) {
         // NFT 발행 API
         axios.post('http://localhost:4000/mintNFT', {
           username: 'server', // server만 deploy 가능하다는 전제
-          nftpath: selectedFileURI,
+          nfturl: selectedFileURL,
           nftname: nftName,
           nftdesc: nftDesc
         })
@@ -46,8 +47,8 @@ function CreateNFT({username,address}) {
           
           <div className='selectNFTFile' style={{marginBottom: "40px"}}>
               <label for="selectFile">
-                {selectedFileURI?
-                  <img src={selectedFileURI} style={{width: '400px'}} />
+                {selectedFileURL?
+                  <img src={selectedFileURL} style={{width: '400px'}} />
                   :
                   <img src="images/Upload.png" style={{width: '35%', height: '35%'}} />
                 }
