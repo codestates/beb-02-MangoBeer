@@ -19,21 +19,25 @@ router.post('/', async(req, res)=> {
 
     let parameter = {
         from: server.address,
-        gas: 2000000,
+        gas: 3000000,
         // gasPrice: web3.utils.toHex(web3.utils.toWei('30', 'gwei'))
     }
 
-    // console.log(payload)
-    // myErc721Contract.deploy(payload)
-    // .send(parameter, (err, transactionHash) => {
-    //     console.log('Transaction Hash :', transactionHash);
-    // })
-
-    NftContract.create({
-        contractAddr: process.env.ERC721_CONTRACT_ADDR
+    myErc721Contract.deploy(payload)
+    .send(parameter, (err, transactionHash) => {
+        console.log('ERC721 Deploy Transaction Transaction Hash :', transactionHash);
     })
-    .then((temp) => {
-        res.status(200).json(temp);
+    .on('receipt', async (receipt) => {
+        console.log(receipt.contractAddress);
+        const msg = 'Succeed in deploying ERC721 token contract.'
+        const newContract = await NftContract.create({ contractAddr: receipt.contractAddress})
+        res.status(201).json({receipt, newContract, msg});
+    })
+    .on('error', (error)=> {
+        console.log(error);
+        const msg = 'Failed to deploy ERC721 token contract.'
+        error = error.toString();
+        res.status(500).json({error, msg});
     })
 
 })
