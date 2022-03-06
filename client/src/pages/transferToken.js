@@ -5,7 +5,7 @@ import {FormControl, InputGroup, Button, Table} from 'react-bootstrap';
 import {useState, useEffect} from 'react';
 import axios from 'axios';
 import TxList from '../components/txList';
-import axios from 'axios';
+
 function TransferToken({username,address}) {
 
   const [receiver, setReceiver] = useState('');
@@ -16,11 +16,10 @@ function TransferToken({username,address}) {
   const [count, setCount] = useState(0);
 
   useEffect(() => {
-    setTimeout(() => { setCount(count + 1) }, 10000); // 10s
-
+    
     getTokenBal(); // token 잔액 불러오기
     getTxList();
-  }, [count])
+  }, [])
   
   const transferBntHandler = () => {
     if(window.confirm("토큰을 전송하시겠습니까?")){
@@ -91,6 +90,7 @@ function TransferToken({username,address}) {
     .then(res => res.data)
     .then(data => {
       setTxList(data);
+      console.log('data : '+data)
     })
     .catch(err => console.log(err));
     // setTxList([{from: '0x111111111111', to: '0x222222222222222', amount: '3', txhash: '0x33333333333'}]);

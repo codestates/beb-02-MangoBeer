@@ -17,7 +17,9 @@ function ServerPage({username,address}) {
     const [count, setCount] = useState(0);
 
     useEffect(()=>{
-      setTimeout(() => { setCount(count + 1) }, 10000); // 10s
+      if (count < 3){
+        setTimeout(() => { setCount(count + 1) }, 10000); // 10s
+      }
 
       getTokenBal();
       getEthBal();

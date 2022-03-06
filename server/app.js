@@ -15,7 +15,11 @@ app.use('/', require("./routes/index"));
 
 app.use(bodyParser.urlencoded({extended:true}))
 app.use(bodyParser.json());
-app.use(cors());
+app.use(cors({
+  origin: "*",
+  credentials: true,
+  methods: ["GET", "POST", "OPTIONS"],
+}));
 
 app.listen(4000, () => {
     console.log(`🚀  server running... http://localhost:${4000}`)

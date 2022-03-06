@@ -6,10 +6,12 @@ const Op = sequelize.Op;
 
 router.get('/', (req, res, next) => {
   const {address} = req.query;
+  console.log('주소 333 : '+address);
 
   if(address == undefined) {
     Transaction.findAll()
       .then((tx) => {
+        console.log('tx 1 : '+tx);
         res.status(200).json(tx);
       });
   }
@@ -26,6 +28,7 @@ router.get('/', (req, res, next) => {
         }
       })
       .then((tx) => {
+        console.log('tx 2 : '+tx);
         res.status(200).json(tx);
       })
     }

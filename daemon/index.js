@@ -9,6 +9,7 @@ const startTask = async () => {
 	getLastestTransactions().then((result) => {
 		for (let data of result) {
 			arr.push(storeData(data));
+      console.log('data 11 : '+ arr);
 		}
 		if (arr.length > 0) {
 			Promise.all(arr)
