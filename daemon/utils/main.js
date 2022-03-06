@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const Web3 = require('web3');
-const basePath = '/Users/seomingyun/VSworkspace/BEB_space/project/project_2/beb-02-MangoBeer/daemon';
+const basePath = '/Users/moon/work/05_section/beb-02-MangoBeer/daemon';
 
 
 
@@ -12,7 +12,7 @@ const checkedBlockNum = Number(
   })
 );
 
-const contractAddress = '0x88d6C135e724A468D225e2566265E0769B7dfe44';
+const contractAddress = '0x814DaD7C22881da81721f370BdE8aefbe84206c8';
 // fs.readFileSync('./deployedAddress',{
 //   encoding: 'utf-8', 
 // });
@@ -24,16 +24,13 @@ let lastest = checkedBlockNum;
 const getTx = async (tx) => await web3.eth.getTransaction(tx); // 주어진 트랜잭션 해시와 일치하는 트랜잭션 반환
 
 const getLastestTransactions = async () => {
-  console.log('1')
 	try {
 		// 최신 블록번호가 마지막에 확인한 블록번호보다 크다면,
 		// 그 차이만큼 블록을 조회하기 위해 범위 업데이트
-    console.log('2')
 		await web3.eth.getBlockNumber((err, result) => {   //현재 블록 번호 반환
 			if (err) throw err;
 			if (result > lastest) {
 				lastest = result;
-        console.log('lastest : '+ lastest)
 			}
 		});
 
@@ -46,13 +43,7 @@ const getLastestTransactions = async () => {
 
 				// 트랜잭션 해시로 모든 트랜잭션 조회
 				for (let tx of block.transactions) {
-          const tx_check = getTx(tx)
-					// allTransactions.push(getTx(tx));
-          
-          allTransactions.push(tx_check);
-          console.log('tx : '+ tx)
-          console.log('getTx : ' + tx_check[0]);
-          console.log('all : '+ allTransactions);
+					allTransactions.push(getTx(tx));
 				}
 			}
 
