@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const Web3 = require('web3');
-const basePath = '/Users/moon/work/05_section/beb-02-MangoBeer/daemon';
+const basePath = '/Users/seomingyun/VSworkspace/BEB_space/project/project_2/beb-02-MangoBeer/daemon';
 
 
 
@@ -12,7 +12,7 @@ const checkedBlockNum = Number(
   })
 );
 
-const contractAddress = '0x814DaD7C22881da81721f370BdE8aefbe84206c8';
+const contractAddress = '0x6113E1C88459A870b01795B15B63ef3CfAFe0c78';
 // fs.readFileSync('./deployedAddress',{
 //   encoding: 'utf-8', 
 // });
