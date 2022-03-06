@@ -36,4 +36,5 @@ contract MangoNFT is ERC721URIStorage, Ownable {
         token = IERC20(tokenAddress);
         return true;
     }
+    
 }
