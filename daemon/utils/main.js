@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const Web3 = require('web3');
-const basePath = '/Users/moon/work/05_section/beb-02-MangoBeer/daemon';
+const basePath = '/Users/seomingyun/VSworkspace/BEB_space/project/project_2/beb-02-MangoBeer/daemon';
 
 
 

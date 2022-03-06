@@ -22,6 +22,7 @@ function MyPage({username,address}) {
 
       getTokenBal();
       getPosts();
+      getTxList();
     }, [count])
 
     const getTokenBal = () => {
@@ -66,6 +67,20 @@ function MyPage({username,address}) {
         console.log(err); 
         alert(err.toString());
       });
+    }
+
+    const getTxList = () => {
+      // Tx list 불러오는 API 호출(내 주소가 from or to인 트랜잭션만 가져옴) ...
+      axios.get('http://localhost:4000/txList/withAddr', { 
+        params: {
+          address: address
+        }
+       }) // 내가 수신하거나 발신한 트랜잭션 불러오기
+      .then(res => res.data)
+      .then(data => {
+        setMyTxList(data.reverse());
+      })
+      .catch(err => console.log(err));
     }
 
     return (
