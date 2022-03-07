@@ -44,7 +44,7 @@ router.post('/', async (req, res) => {
         return res.status(400).send('Insufficient ERC20 Mango Token'); // 잔액 부족
     }
 
-    // 2. 토큰 차감
+    // 2. 토큰 전송
     const resultOfERC20 = await myErc20Contract.methods.transferEach(to, from, price).send(
         {from: server.address, to: process.env.CONTRACT_ADDR, gasPrice: 100, gas: 2000000}
     )
@@ -54,7 +54,7 @@ router.post('/', async (req, res) => {
         res.status(400).send({error, msg});
     })
     
-    console.log('망고 차감 Tx: ', resultOfERC20.transactionHash);
+    console.log('망고 전송 Tx: ', resultOfERC20.transactionHash);
 
     // 3. NFT 이동
     const resultOfERC721 = await myErc721Contract.methods.transferEach(from, to, tokenId).send(

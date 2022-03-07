@@ -9,7 +9,6 @@ const { fromString } = require('uint8arrays/from-string');
 const web3 = new Web3(process.env.GANACHE_NETWORK);
 const execSync = require('child_process').execSync;
 
-// 요거두!!!!!!!!!!!!!!!!!!!!! 하아..
 const erc721abi = require('../../contracts/erc721_1abi');
 const erc20abi = require('../../contracts/erc20abi');
 

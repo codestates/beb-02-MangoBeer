@@ -46,7 +46,7 @@ router.post('/setToken', async (req, res) => {
         );
         msg = 'Succeed in setting ERC20 Token To ERC721 Contract.';
     
-        res.status(200).json({flag, msg});
+        res.status(201).json({flag, msg});
     }
     catch(error) {
         msg = 'Failed to set ERC20 Token To ERC721 Contract';

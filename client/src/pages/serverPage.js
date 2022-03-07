@@ -14,6 +14,10 @@ function ServerPage({username,address}) {
     const [myContractDate, setMyContractDate] = useState('-')
     const [isDeploy, setIsDeploy] = useState(false);
 
+    const [myNftContractAddr, setMyNftContractAddr] = useState('-'); // NFT 컨트랙트 정보
+    const [myNftContractDate, setMyNftContractDate] = useState('-')
+    const [isNftDeploy, setIsNftDeploy] = useState(false);
+
     const [count, setCount] = useState(0);
 
     useEffect(()=>{
@@ -22,6 +26,7 @@ function ServerPage({username,address}) {
       getTokenBal();
       getEthBal();
       getContractInfo();
+      getNftContractInfo();
     }, [count])
 
     const getContractInfo = () => {
@@ -36,13 +41,32 @@ function ServerPage({username,address}) {
       }) 
       .catch(err => {
         console.log(err); 
-        alert('컨트랙트 배포가 필요합니다.');
+        alert('ERC20 컨트랙트 배포가 필요합니다.');
         setMyContractAddr('-');
         setMyContractDate('-');
         setIsDeploy(false);
       });
     }
 
+    const getNftContractInfo = () => {
+      axios.get('http://localhost:4000/mypage/getLatestNFTContracts')
+      .then(res => {
+        // console.log(res);
+        if(res.status === 200){
+          setMyNftContractAddr(res.data.latestInfo.contractAddr);
+          setMyNftContractDate(res.data.latestInfo.create_at)
+          setIsNftDeploy(true);
+        }
+      }) 
+      .catch(err => {
+        console.log(err); 
+        alert('ERC721 컨트랙트 배포가 필요합니다.');
+        setMyNftContractAddr('-');
+        setMyNftContractDate('-');
+        setIsNftDeploy(false);
+      });
+    }
+    
     const getTokenBal = () => {
       axios.get('http://localhost:4000/forEther/totalSupply')
       .then(res => {
@@ -124,6 +148,46 @@ function ServerPage({username,address}) {
 
     }
 
+    const deployNFTBntHandler = () => {
+      if(isNftDeploy == false) {
+        axios.post('http://localhost:4000/deployNFT')
+        .then(res => {
+          // console.log(res);
+          if(res.status === 201){
+            getNftContractInfo();
+          }
+          else {
+            alert('ERC721 토큰 컨트랙트 배포에 실패하였습니다.');
+          }
+        }) 
+        .catch(err => {
+          console.log(err); 
+          alert('ERC721 토큰 컨트랙트 배포에 실패하였습니다.');
+          alert(err.toString());
+        });
+      }
+      else {
+        alert('이미 ERC721 컨트랙트를 배포하였습니다.');
+      }
+    }
+
+    const setBntHandler = () => {
+      axios.post('http://localhost:4000/forNFT/setToken')
+      .then(res => {
+        if(res.status === 201){
+          alert('ERC20 토큰 컨트랙트 세팅에 성공하였습니다.');
+        }
+        else {
+          alert('ERC20 토큰 컨트랙트 세팅에 실패하였습니다.');
+        }
+      })
+      .catch(err => {
+        console.log(err); 
+        alert('ERC20 토큰 컨트랙트 세팅에 실패하였습니다.');
+        alert(err.toString());
+      });
+    }
+
     return (
       <div className="MyPage">
 
@@ -181,6 +245,38 @@ function ServerPage({username,address}) {
             </tr>
             <tr>
               <td style={{fontSize: "18px", color: "gray"}}>{myContractDate}</td>
+            </tr>
+          </table>
+        </div>
+
+        <div style={{marginLeft: "18%", marginRight: "18%", marginTop: "40px"}}>
+          <table style={{textAlign: "left"}}>
+            <tr>
+              <th style={{ fontWeight: "normal", fontSize: "22px"}}>ERC721 Token Contract Info</th>
+            </tr>
+            <tr> 
+              <td style={{fontSize: "27px", fontWeight: "bold"}}>{myNftContractAddr}</td>
+              <td style={{textAlign: "center"}}>        
+                <Button 
+                    variant="light" 
+                    style={{margin: "4px"}}
+                    onClick={deployNFTBntHandler}
+                    >
+                    컨트랙트 배포하기
+                </Button>
+              </td>
+              <td style={{textAlign: "center"}}>        
+                <Button 
+                    variant="light" 
+                    style={{margin: "4px"}}
+                    onClick={setBntHandler}
+                    >
+                    ERC20 컨트랙트 세팅하기
+                </Button>
+              </td>
+            </tr>
+            <tr>
+              <td style={{fontSize: "18px", color: "gray"}}>{myNftContractDate}</td>
             </tr>
           </table>
         </div>

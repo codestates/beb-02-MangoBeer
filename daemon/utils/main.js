@@ -12,7 +12,7 @@ const checkedBlockNum = Number(
   })
 );
 
-const contractAddress = '0x6113E1C88459A870b01795B15B63ef3CfAFe0c78';
+const contractAddress = '0xb1B7c945650b1Ca6cd9cD9661d0D703582750C62';
 // fs.readFileSync('./deployedAddress',{
 //   encoding: 'utf-8', 
 // });
