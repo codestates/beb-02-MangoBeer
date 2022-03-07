@@ -5,9 +5,10 @@ const { NftContract } = require('../../models');
 const router = express.Router();
 const web3 = new Web3(process.env.GANACHE_NETWORK);
 
+// erc721 contract 임시로 토큰 2개로 민팅할 수 있게 바꿔놓음!!!!!!
 router.post('/', async(req, res)=> {
-    const erc721abi = require('../../contracts/erc721abi');
-    const bytecode = require('../../contracts/erc721bytecode');
+    const erc721abi = require('../../contracts/erc721_1abi');
+    const bytecode = require('../../contracts/erc721_1bytecode');
 
     const server = await web3.eth.accounts.wallet.add(process.env.SERVER_PK);
 

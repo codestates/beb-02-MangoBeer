@@ -4,7 +4,7 @@
 import { Table } from 'react-bootstrap';
 import BoardList from '../components/boardList';
 import {useState, useEffect} from 'react'
-import NftList from '../components/nftList';
+import MyNftList from '../components/myNftList';
 import TxList from '../components/txList';
 import axios from 'axios';
 
@@ -23,6 +23,7 @@ function MyPage({username,address}) {
       getTokenBal();
       getPosts();
       getTxList();
+      getNftList();
     }, [count])
 
     const getTokenBal = () => {
@@ -79,6 +80,19 @@ function MyPage({username,address}) {
       .then(res => res.data)
       .then(data => {
         setMyTxList(data.reverse());
+      })
+      .catch(err => console.log(err));
+    }
+
+    const getNftList = () => {
+      axios.get('http://localhost:4000/getNFT', { 
+        params: {
+          address: address
+        }
+       }) // 내가 수신하거나 발신한 트랜잭션 불러오기
+      .then(res => res.data)
+      .then(data => {
+        setMyNftList(data.nftList);
       })
       .catch(err => console.log(err));
     }
@@ -156,7 +170,7 @@ function MyPage({username,address}) {
             ''
             :
             myNftList.map((dataInfo) => {
-                return <NftList key={dataInfo.nftId} dataInfo={dataInfo} />
+                return <MyNftList key={dataInfo.nftId} dataInfo={dataInfo} />
             })
           }
 

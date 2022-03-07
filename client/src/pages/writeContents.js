@@ -38,7 +38,7 @@ function WriteContents({username,address}) {
         console.log(err);
         alert('토큰 지급이 실패하였습니다.');
         alert(err.toString());
-      });;
+      });
 
     }
   }

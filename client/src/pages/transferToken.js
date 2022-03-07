@@ -15,10 +15,11 @@ function TransferToken({username,address}) {
   const [count, setCount] = useState(0);
 
   useEffect(() => {
+    setTimeout(() => { setCount(count + 1) }, 1000); // 1s
     
     getTokenBal(); // token 잔액 불러오기
     getTxList();
-  }, [])
+  }, [count])
   
   const transferBntHandler = () => {
     if(window.confirm("토큰을 전송하시겠습니까?")){

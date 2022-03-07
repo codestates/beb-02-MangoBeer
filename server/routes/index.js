@@ -25,8 +25,11 @@ router.use('/transferEach', require('./erc20/transferEach')); // erc20 토큰 �
 // ERC721 API
 router.use('/deployNFT', require('./erc721/deployNFT'));
 router.use('/mintNFT', require('./erc721/mintNFT'));
+router.use('/forNFT', require('./erc721/forNFT'));
 router.use('/transferNFT', require('./erc721/transferNFT'));
 router.use('/getNFT', require('./erc721/getNFT'));
+// router.use('/transferNFT', require('./erc721/transferNFT'));
+
 
 
 module.exports = router;

@@ -27,7 +27,7 @@ router.post('/', async (req, res) => {
     console.log('to_bal: ', to_bal);
 
     if(Number(amount) > Number(from_bal)) {
-        res.status(400).json('Insufficient Token'); // 잔액 부족
+        return res.status(400).send('Insufficient Token'); // 잔액 부족
     }
     
     // (2) transfer 함수 실행
@@ -35,6 +35,7 @@ router.post('/', async (req, res) => {
         {from: server.address, to: process.env.CONTRACT_ADDR, gasPrice: 100, gas: 2000000}
     )
     .on('receipt', (receipt)=>{
+        console.log(receipt);
         const msg = 'Succeed in transfering ERC20 Token between users.';
         res.status(201).json({receipt, msg});
     })

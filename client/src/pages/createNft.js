@@ -1,6 +1,7 @@
 // NFT 생성 페이지 - mintNft
 import React, {useState} from 'react';
 import { InputGroup, FormControl, Button } from 'react-bootstrap';
+import { useNavigate } from "react-router";
 import axios from 'axios';
 
 function CreateNFT({username,address}) {
@@ -10,6 +11,8 @@ function CreateNFT({username,address}) {
 
     const [nftName, setNftName] = useState(''); // 입력한 nft 이름
     const [nftDesc, setNftDesc] = useState(''); // 입력한 nft 설명
+
+    const navigate = useNavigate();
 
     const selectImgForNFT = (event) => {
       const file = event.target.files[0];
@@ -27,11 +30,22 @@ function CreateNFT({username,address}) {
         console.log('NFT 발행 중 ...')
         // NFT 발행 API
         axios.post('http://localhost:4000/mintNFT', {
-          username: 'server', // server만 deploy 가능하다는 전제
+          username: username, // server만 deploy 가능하다는 전제
+          useraddr: address,
           nfturl: selectedFileURL,
           nftname: nftName,
           nftdesc: nftDesc
         })
+        .then(res => res.data)
+        .then(async (data) => {
+          alert('NFT가 발행되었습니다.');
+          navigate('/nft');
+        })
+        .catch(err => {
+          console.log(err);
+          alert('NFT 발행에 실패하였습니다.');
+          alert(err.toString());
+        });;
 
         // NFT 발행 시 -> 페이지 이동
         // document.location.href = '/nft';
